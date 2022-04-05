@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserGroupsManagment", "UserGroupsManagments\UserGroupsManagment.csproj", "{6B93814E-1177-4C0F-AB19-9A55F9D7888B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserGroupsManagment", "UserGroupsManagment\UserGroupsManagment.csproj", "{6B93814E-1177-4C0F-AB19-9A55F9D7888B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserGroupsManagment.Service", "UserGroupsManagment.Service\UserGroupsManagment.Service.csproj", "{CC53FFF8-1688-4F09-9F36-7D3CDF6CFDA3}"
 EndProject
