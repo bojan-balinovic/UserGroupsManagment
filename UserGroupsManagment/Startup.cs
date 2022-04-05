@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using UserGroupsManagment.Repository;
 using AutoMapper;
 using UserGroupsManagment.Repository.Contractors;
+using UserGroupsManagment.Service.Contractors;
+using UserGroupsManagment.Service;
 
 namespace UserGroupsManagment
 {
@@ -52,6 +54,7 @@ namespace UserGroupsManagment
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
