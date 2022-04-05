@@ -8,12 +8,13 @@ using UserGroupsManagment.Model.Contractors;
 
 namespace UserGroupsManagment.Repository
 {
-    public class MappingProfile:Profile
+    public class RepositoryMappingProfile:Profile
     {
-        public MappingProfile()
+        public RepositoryMappingProfile()
         {
             CreateMap<IUser, User>().ReverseMap();
             CreateMap<UserEntity, IUser>().As<User>();
+            CreateMap<IUser, UserEntity>();
             CreateMap<UserEntity, User>().ReverseMap();
             CreateMap<PaginationList<IUser>, PaginationList<UserEntity>>().ReverseMap();
 
