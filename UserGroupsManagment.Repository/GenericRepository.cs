@@ -54,20 +54,19 @@ namespace UserGroupsManagment.Repository
             return default;
         }
 
-        public async Task<IModel> DeleteOne(Guid id)
+        public async Task<IModel> DeleteOne(int id)
         {
-            if (id != null)
+
+            Entity entity = DbSet.Find(id);
+            
+            if (entity != null)
             {
-                Entity entity = DbSet.Find(id);
-                if (entity != null)
-                {
-                    DbSet.Remove(entity);
-                    await Context.SaveChangesAsync();
-                    var model = Mapper.Map<IModel>(entity);
-                    return model;
-                }
-                return default;
+                DbSet.Remove(entity);
+                await Context.SaveChangesAsync();
+                var model = Mapper.Map<IModel>(entity);
+                return model;
             }
+
             return default;
         }
 
@@ -76,11 +75,13 @@ namespace UserGroupsManagment.Repository
             var entities = await HandleFiltering(filter);
             entities = HandleSorting(entities, orderBy);
             var models = Mapper.Map<IEnumerable<IModel>>(entities);
-            var paginationList = new PaginationList<IModel>(models.ToList(), currentPage);
+            currentPage = filter.CurrentPage != null ? (int)filter.CurrentPage : currentPage;
+            int? pageSize = filter.PageSize != null ? filter.PageSize : null;
+            var paginationList = new PaginationList<IModel>(models.ToList(), currentPage, pageSize);
             return await Task.FromResult(paginationList);
         }
 
-        public virtual async Task<IModel> GetOne(Guid id)
+        public virtual async Task<IModel> GetOne(int id)
         {
             var vehicleEntity = await DbSet.FindAsync(id);
 
@@ -149,7 +150,7 @@ namespace UserGroupsManagment.Repository
             return default;
         }
 
-    
+
         public async Task<IModel> GetOneByFilter(Filter filter)
         {
             var entities = await HandleFiltering(filter);
@@ -158,16 +159,16 @@ namespace UserGroupsManagment.Repository
             return await Task.FromResult(models.First());
         }
 
-        public async Task<IEnumerable<IModel>> GetAll(Filter filter=null, int currentPage = -1, string orderBy = "")
+        public async Task<IEnumerable<IModel>> GetAll(Filter filter = null, int currentPage = -1, string orderBy = "")
         {
-            IQueryable<Entity> entities=DbSet;
+            IQueryable<Entity> entities = DbSet;
 
             if (filter != null)
             {
                 entities = await HandleFiltering(filter);
                 entities = HandleSorting(entities, orderBy);
             }
-         
+
             var models = Mapper.Map<IEnumerable<IModel>>(entities);
             return models;
         }

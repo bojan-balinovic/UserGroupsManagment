@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UserGroupsManagment.Repository\UserGroupsManagment.Repository.csproj" />
     <ProjectReference Include="..\UserGroupsManagment.Service\UserGroupsManagment.Service.csproj" />
+    <ProjectReference Include="..\UserGroupsManagment\UserGroupsManagment.csproj" />
   </ItemGroup>
 
   <ItemGroup>

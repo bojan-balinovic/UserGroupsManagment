@@ -10,11 +10,11 @@ namespace UserGroupsManagment.Service.Contractors
     {
         Task<T> AddOne(T model);
 
-        Task<T> DeleteOne(Guid id);
+        Task<T> DeleteOne(int id);
 
         Task<PaginationList<T>> GetMany(Filter filter, int currentPage = -1, string orderBy = "");
 
-        Task<T> GetOne(Guid id);
+        Task<T> GetOne(int id);
 
         Task<T> UpdateOne(T model);
         Task<IEnumerable<T>> GetAll();

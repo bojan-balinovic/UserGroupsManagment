@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using UserGroupsManagment.Repository;
 using UserGroupsManagment.Repository.Contractors;
+using UserGroupsManagment;
 
 namespace UserGroupsManagment.Test
 {
@@ -24,6 +25,7 @@ namespace UserGroupsManagment.Test
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new RepositoryMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

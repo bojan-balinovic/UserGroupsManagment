@@ -11,11 +11,18 @@ namespace UserGroupsManagment.Model
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
 
-        public PaginationList(IEnumerable<T> items, int currentPage, int pageSize = 5)
+        public PaginationList(IEnumerable<T> items, int currentPage, int? pageSize)
         {
             Items = items;
             CurrentPage = currentPage;
-            PageSize = pageSize;
+            if (pageSize != null)
+            {
+                PageSize = (int)pageSize;
+            }
+            else
+            {
+                PageSize = 5;
+            }
         }
 
         public IEnumerable<T> Items

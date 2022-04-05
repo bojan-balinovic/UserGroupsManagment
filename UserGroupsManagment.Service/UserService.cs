@@ -24,7 +24,7 @@ namespace UserGroupsManagment.Service
             return await Repository.AddOne(model);   
         }
 
-        public async Task<IUser> DeleteOne(Guid id)
+        public async Task<IUser> DeleteOne(int id)
         {
             return await Repository.DeleteOne(id);
         }
@@ -34,7 +34,7 @@ namespace UserGroupsManagment.Service
             return await Repository.GetManyByFilter(filter, currentPage, orderBy);
         }
 
-        public async Task<IUser> GetOne(Guid id)
+        public async Task<IUser> GetOne(int id)
         {
             return await Repository.GetOne(id);
         }

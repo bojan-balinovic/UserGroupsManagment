@@ -12,11 +12,11 @@ namespace UserGroupsManagment.Repository.Contractors
     {
         Task<IModel> AddOne(IModel model);
 
-        Task<IModel> DeleteOne(Guid id);
+        Task<IModel> DeleteOne(int id);
 
         Task<PaginationList<IModel>> GetManyByFilter(Filter filter, int currentPage = -1, string orderBy = "");
 
-        Task<IModel> GetOne(Guid id);
+        Task<IModel> GetOne(int id);
 
         Task<IModel> UpdateOne(IModel model);
         Task<IModel> GetOneByFilter(Filter filter);
