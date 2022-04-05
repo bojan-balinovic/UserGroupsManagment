@@ -49,6 +49,7 @@ namespace UserGroupsManagment
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new RepositoryMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
