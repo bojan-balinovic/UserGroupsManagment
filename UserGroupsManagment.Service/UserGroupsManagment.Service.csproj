@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UserGroupsManagment.Model\UserGroupsManagment.Model.csproj" />
+    <ProjectReference Include="..\UserGroupsManagment.Repository\UserGroupsManagment.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
