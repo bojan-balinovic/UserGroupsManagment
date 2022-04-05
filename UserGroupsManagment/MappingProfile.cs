@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UserGroupsManagment.Model;
+using UserGroupsManagment.Model.Contractors;
 using UserGroupsManagment.ViewModels;
 
 namespace UserGroupsManagment
@@ -12,7 +13,7 @@ namespace UserGroupsManagment
     {
         public MappingProfile()
         {
-            CreateMap<CreateUserViewModel, User>();
+            CreateMap<CreateUserViewModel, IUser>();
         }
     }
 }
