@@ -14,6 +14,7 @@ namespace UserGroupsManagment
         public MappingProfile()
         {
             CreateMap<CreateUserViewModel, IUser>();
+            CreateMap<CreateGroupViewModel, IGroup>();
         }
     }
 }
