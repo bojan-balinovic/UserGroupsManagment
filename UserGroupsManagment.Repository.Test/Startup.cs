@@ -22,6 +22,7 @@ namespace UserGroupsManagment.Test
             {
                 options.UseInMemoryDatabase("database");
                 options.EnableSensitiveDataLogging();
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             //Auto mapper
