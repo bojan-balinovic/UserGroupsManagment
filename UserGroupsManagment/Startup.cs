@@ -33,7 +33,8 @@ namespace UserGroupsManagment
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserGroupsManagments", Version = "v1" });
@@ -43,6 +44,7 @@ namespace UserGroupsManagment
             services.AddDbContext<MainContext>(options =>
             {
                 options.UseSqlite("Data source = persons.db");
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             //Auto mapper
