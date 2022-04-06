@@ -15,18 +15,17 @@ using Xunit;
 
 namespace UserGroupsManagment.Test.Service
 {
-    public class GroupServiceTest
+    public class GroupService
     {
-        public IGroupService GroupService { get; }
+        public IGroupService Service { get; }
 
         public IUserService UserService { get; }
         public IMapper Mapper { get; }
 
-        public GroupServiceTest(IUnitOfWork unitOfWork, IUserService userService, IGroupService groupService, IMapper mapper)
+        public GroupService(IUnitOfWork unitOfWork, IUserService userService, IGroupService groupService, IMapper mapper)
         {
-            GroupService = new GroupService(unitOfWork.GroupRepository);
-
-            UserService = new UserService(unitOfWork.UserRepository);
+            Service = groupService;
+            UserService = userService;
             Mapper = mapper;
         }
 
@@ -35,7 +34,7 @@ namespace UserGroupsManagment.Test.Service
         {
             var group = new Group();
             group.Name = "Grupa 1";
-            var newGroup = await GroupService.AddOne(group);
+            var newGroup = await Service.AddOne(group);
             Assert.NotNull(newGroup);
         }
         [Fact]
@@ -47,8 +46,8 @@ namespace UserGroupsManagment.Test.Service
             group.Users = new List<IUser>();
             group.Users.Add(user1);
             group.Users.Add(user2);
-            IGroup newGroup = await GroupService.AddOne(group);
-            newGroup = await GroupService.GetOneByFilter(
+            IGroup newGroup = await Service.AddOne(group);
+            newGroup = await Service.GetOneByFilter(
                 new Model.Filters.GroupFilter() { Id = newGroup.Id }
                 );
             Assert.NotNull(newGroup);
@@ -65,22 +64,36 @@ namespace UserGroupsManagment.Test.Service
             group.Users = new List<IUser>();
             group.Users.Add(user1);
             group.Users.Add(user2);
-            IGroup newGroup = await GroupService.AddOne(group);
-            newGroup = await GroupService.GetOneByFilter(
-                new Model.Filters.GroupFilter() { Id = newGroup.Id }
-                );
+            IGroup newGroup = await Service.AddOne(group);
+ 
             Assert.NotNull(newGroup);
             Assert.Equal(2, newGroup.Users.Count());
 
             // Updating group
             newGroup.Name = "Grupa test";
             // Adding new user to group
-            //IUser user3 = new User() { Name = "test3", Password = "12345678", Email = "test3@test.com" };
-            //user3=await UserService.AddOne(user3);
-            //newGroup.Users.Add(user3);
-            newGroup = await GroupService.UpdateOne(newGroup);
-          //  Assert.Equal(3, newGroup.Users.Count());
+            IUser user3 = new User() { Name = "test3", Password = "12345678", Email = "test3@test.com" };
+            user3 = await UserService.AddOne(user3);
+            newGroup.Users.Add(user3);
+            newGroup = await Service.UpdateOne(newGroup);
+         
+            newGroup = await Service.GetOneByFilter(new Model.Filters.GroupFilter() { Id = newGroup.Id });
             Assert.Equal("Grupa test", newGroup.Name);
+             Assert.Equal(3, newGroup.Users.Count());
+        }
+        [Fact]
+        public async void DeleteGroup() {
+            var group = new Group() { Name = "Grupa 1" };
+            IGroup newGroup = await Service.AddOne(group);
+            await Service.DeleteOne(newGroup.Id);
+            Assert.DoesNotContain(await Service.GetAll(), e => e.Id == newGroup.Id);
+        }
+        [Fact]
+        public async void CreateGroup()
+        {
+            var group = new Group() { Name = "Grupa 1" };
+            IGroup newGroup = await Service.AddOne(group);
+            Assert.Contains(await Service.GetAll(), e => e.Id == newGroup.Id);
         }
     }
 }
