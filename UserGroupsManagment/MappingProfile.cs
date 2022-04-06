@@ -15,6 +15,7 @@ namespace UserGroupsManagment
         {
             CreateMap<CreateUserViewModel, IUser>();
             CreateMap<CreateGroupViewModel, IGroup>();
+            CreateMap<EditGroupViewModel, IGroup>();
         }
     }
 }
