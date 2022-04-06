@@ -47,8 +47,9 @@ namespace UserGroupsManagment.Repository
                 var entity = Mapper.Map<Entity>(model);
                 entity.DateCreated = DateTime.Now;
                 entity.DateModified = DateTime.Now;
-                await DbSet.AddAsync(entity);
+                var entityEntry=await DbSet.AddAsync(entity);
                 await Context.SaveChangesAsync();
+                //entityEntry.State = EntityState.Detached;
                 return Mapper.Map<IModel>(entity);
             }
             return default;
@@ -93,20 +94,10 @@ namespace UserGroupsManagment.Repository
         #region Filtering and sorting entities
         public async virtual Task<IQueryable<Entity>> HandleFiltering(Filter filter)
         {
-            IQueryable<Entity> entities;
-
-            if (filter.UserId != null)
-            {
-                entities = DbSet.Where(e => (Guid)e.GetType().GetType().GetProperty("UserId").GetValue(e, null) == filter.UserId);
-            }
-            else
-            {
-                entities = DbSet;
-            }
-
-
-
-            return await Task.FromResult(entities);
+            IQueryable<Entity> entities=DbSet;
+            if (filter.Id != null)
+                entities = entities.Where(e => e.Id == filter.Id);
+            return await Task.FromResult(entities.AsNoTracking());
         }
 
 
@@ -142,7 +133,7 @@ namespace UserGroupsManagment.Repository
                 var entity = Mapper.Map<Entity>(model);
                 entity.DateModified = DateTime.UtcNow;
 
-                var entityEntry = DbSet.Attach(entity);
+                var entityEntry = DbSet.Update(entity);
                 entityEntry.State = EntityState.Modified;
                 await Context.SaveChangesAsync();
                 return model;

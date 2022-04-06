@@ -30,27 +30,29 @@ namespace UserGroupsManagment.Repository.Test
             user.Email = "test@test.com";
             user.Name = "Test";
             user.Password = "test";
-            await repository.AddOne(user);
+            var newUser=await repository.AddOne(user);
             var models=await repository.GetAll();
-            Assert.Single(models);
+            Assert.Contains(models, e=>e.Id==newUser.Id);
         }
 
         [Fact]
         public async void GetAllWithPagination()
         {
             var repository = CreateRepositoryInstance();
-            IUser user = new User();
-            user.Email = "test@test.com";
-            user.Name = "Test";
-            user.Password = "test";
-            await repository.AddOne(user);
-            user.Email = "test2@test.com";
-            user.Name = "Test2";
-            user.Password = "test2";
-            await repository.AddOne(user);
+            IUser user1 = new User();
+            user1.Email = "test@test.com";
+            user1.Name = "Test";
+            user1.Password = "test";
+            user1=await repository.AddOne(user1);
+            IUser user2 = new User();
+            user2.Email = "test2@test.com";
+            user2.Name = "Test2";
+            user2.Password = "test2";
+            user2=await repository.AddOne(user2);
             var filter = new UserFilter() { CurrentPage = 1, PageSize = 10 };
             var pagination = await repository.GetManyByFilter(filter);
-            Assert.Equal(2, pagination.Items.Count());
+            Assert.Contains(pagination.Items, e=>e.Id==user1.Id);
+            Assert.Contains(pagination.Items, e => e.Id == user2.Id);
             Assert.Equal(1, pagination.CurrentPage);
             Assert.Equal(10, pagination.PageSize);
         }

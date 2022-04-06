@@ -13,14 +13,17 @@ namespace UserGroupsManagment.Repository
         public RepositoryMappingProfile()
         {
             CreateMap<IUser, User>().ReverseMap();
-            CreateMap<UserEntity, IUser>().As<User>();
             CreateMap<IUser, UserEntity>();
+            CreateMap<UserEntity, IUser>().As<User>();
             CreateMap<UserEntity, User>().ReverseMap();
             CreateMap<PaginationList<IUser>, PaginationList<UserEntity>>().ReverseMap();
 
             CreateMap<IGroup, Group>().ReverseMap();
+            CreateMap<IGroup, GroupEntity>().ReverseMap();
             CreateMap<GroupEntity, IGroup>().As<Group>();
             CreateMap<GroupEntity, Group>().ReverseMap();
+            CreateMap<PaginationList<IGroup>, PaginationList<GroupEntity>>().ReverseMap();
+
         }
     }
 }

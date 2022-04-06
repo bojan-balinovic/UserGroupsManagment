@@ -4,9 +4,9 @@ using System.Text;
 
 namespace UserGroupsManagment.Model.Contractors
 {
-    public interface IGroup
+    public interface IGroup:IBaseModel
     {
         public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public List<IUser> Users { get; set; }
     }
 }

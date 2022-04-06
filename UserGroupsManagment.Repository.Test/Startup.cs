@@ -7,6 +7,8 @@ using System.Text;
 using UserGroupsManagment.Repository;
 using UserGroupsManagment.Repository.Contractors;
 using UserGroupsManagment;
+using UserGroupsManagment.Service.Contractors;
+using UserGroupsManagment.Service;
 
 namespace UserGroupsManagment.Test
 {
@@ -19,6 +21,7 @@ namespace UserGroupsManagment.Test
             services.AddDbContext<MainContext>(options =>
             {
                 options.UseInMemoryDatabase("database");
+                options.EnableSensitiveDataLogging();
             });
 
             //Auto mapper
@@ -31,6 +34,12 @@ namespace UserGroupsManagment.Test
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
         }
     }
 }

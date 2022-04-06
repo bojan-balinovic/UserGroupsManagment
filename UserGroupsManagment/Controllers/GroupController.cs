@@ -14,19 +14,19 @@ namespace UserGroupsManagment.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController:ControllerBase
+    public class GroupController : ControllerBase
     {
-        public IUserService Service{ get; }
+        public IGroupService Service { get; }
         public IMapper Mapper { get; }
 
-        public UserController(IUserService service, IMapper mapper)
+        public GroupController(IGroupService service, IMapper mapper)
         {
             Service = service;
             Mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]UserFilter filter)
+        public async Task<IActionResult> Get([FromQuery] GroupFilter filter)
         {
             if (filter.CurrentPage > 0)
             {
@@ -36,23 +36,23 @@ namespace UserGroupsManagment.Controllers
             {
                 return Ok(await Service.GetAll());
             }
-            
+
         }
         [HttpPost]
-        public async Task<IActionResult> Post(CreateUserViewModel viewModel)
+        public async Task<IActionResult> Post(CreateGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var model = Mapper.Map<CreateUserViewModel, IUser>(viewModel);
+                var model = Mapper.Map<CreateGroupViewModel, IGroup>(viewModel);
                 return Ok(await Service.AddOne(model));
             }
             return BadRequest();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit(User model)
+        public async Task<IActionResult> Edit(Group model)
         {
             if (ModelState.IsValid)
-            { 
+            {
                 return Ok(await Service.UpdateOne(model));
             }
             return BadRequest();
