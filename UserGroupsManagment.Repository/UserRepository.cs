@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using UserGroupsManagment.Entity;
 using UserGroupsManagment.Model;
 using UserGroupsManagment.Model.Contractors;
@@ -16,6 +18,14 @@ namespace UserGroupsManagment.Repository
         {
 
         }
-
+        public async override Task<IQueryable<UserEntity>> HandleFiltering(UserFilter filter)
+        {
+            var entities=await base.HandleFiltering(filter);
+            if (string.IsNullOrEmpty(filter.Name) == false)
+            {
+                entities = entities.Where(e => e.Name == filter.Name);
+            }
+            return entities;
+        }
     }
 }
