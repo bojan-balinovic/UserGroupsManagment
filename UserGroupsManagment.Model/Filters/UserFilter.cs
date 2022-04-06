@@ -6,5 +6,6 @@ namespace UserGroupsManagment.Model.Filters
 {
     public class UserFilter:GenericFilter
     {
+        public string? Name { get; set; }
     }
 }
