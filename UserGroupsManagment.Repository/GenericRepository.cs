@@ -132,6 +132,7 @@ namespace UserGroupsManagment.Repository
             {
                 var entity = Mapper.Map<Entity>(model);
                 entity.DateModified = DateTime.UtcNow;
+                Context.ChangeTracker.Clear();
 
                 var entityEntry = DbSet.Update(entity);
                 entityEntry.State = EntityState.Modified;
