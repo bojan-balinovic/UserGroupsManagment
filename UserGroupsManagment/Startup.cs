@@ -55,7 +55,12 @@ namespace UserGroupsManagment
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
