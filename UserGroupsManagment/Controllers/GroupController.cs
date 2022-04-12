@@ -49,10 +49,11 @@ namespace UserGroupsManagment.Controllers
             return BadRequest();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit(Group model)
+        public async Task<IActionResult> Edit(EditGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var model = Mapper.Map<EditGroupViewModel, IGroup>(viewModel);
                 return Ok(await Service.UpdateOne(model));
             }
             return BadRequest();
