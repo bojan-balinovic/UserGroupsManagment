@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,14 @@ namespace UserGroupsManagment.Controllers
         {
             Service = service;
             Mapper = mapper;
+        }
+
+        [HttpGet("id")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IUser))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOne(int Id)
+        {
+            return Ok(await Service.GetOneByFilter(new UserFilter { Id = Id }));
         }
 
         [HttpGet]
