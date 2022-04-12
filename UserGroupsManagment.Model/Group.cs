@@ -8,6 +8,6 @@ namespace UserGroupsManagment.Model
     public class Group:BaseModel, IGroup
     {
         public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public List<IUser> Users { get; set; }
     }
 }

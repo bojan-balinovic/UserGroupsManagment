@@ -43,7 +43,7 @@ namespace UserGroupsManagment.Controllers
         {
             if (ModelState.IsValid)
             {
-                var model = Mapper.Map<CreateGroupViewModel, IGroup>(viewModel);
+                IGroup model = Mapper.Map<CreateGroupViewModel, IGroup>(viewModel);
                 return Ok(await Service.AddOne(model));
             }
             return BadRequest();

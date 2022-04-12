@@ -10,6 +10,6 @@ namespace UserGroupsManagment.ViewModels
     public class CreateGroupViewModel
     {
         public string Name { get; set; }
-        public List<IUser> Users { get; set; }
+        public List<CreateUserViewModel> Users { get; set; }
     }
 }

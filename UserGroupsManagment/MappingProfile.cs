@@ -13,9 +13,12 @@ namespace UserGroupsManagment
     {
         public MappingProfile()
         {
-            CreateMap<CreateUserViewModel, IUser>();
-            CreateMap<CreateGroupViewModel, IGroup>();
-            CreateMap<EditGroupViewModel, IGroup>();
+            CreateMap<CreateUserViewModel, User>();
+            CreateMap<CreateUserViewModel, IUser>().As<User>();
+            CreateMap<CreateGroupViewModel, Group>();
+            CreateMap<CreateGroupViewModel, IGroup>().As<Group>();
+            CreateMap<EditGroupViewModel, Group>();
+            CreateMap<EditGroupViewModel, IGroup>().As<Group>();
         }
     }
 }
