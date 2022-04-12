@@ -17,6 +17,11 @@ using AutoMapper;
 using UserGroupsManagment.Repository.Contractors;
 using UserGroupsManagment.Service.Contractors;
 using UserGroupsManagment.Service;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using UserGroupsManagment.Model;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace UserGroupsManagment
 {
@@ -85,6 +90,7 @@ namespace UserGroupsManagment
             {
                 endpoints.MapControllers();
             });
+      
         }
     }
 }

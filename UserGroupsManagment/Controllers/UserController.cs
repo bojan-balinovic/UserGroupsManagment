@@ -26,12 +26,12 @@ namespace UserGroupsManagment.Controllers
             Mapper = mapper;
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetOne(int Id)
+        public async Task<IActionResult> GetOne(int id)
         {
-            var model = await Service.GetOneByFilter(new UserFilter { Id = Id });
+            var model = await Service.GetOneByFilter(new UserFilter { Id = id });
             var viewModel = Mapper.Map<IUser, UserViewModel>(model);
             return Ok(viewModel);
         }
