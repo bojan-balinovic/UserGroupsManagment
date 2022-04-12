@@ -35,19 +35,16 @@ namespace UserGroupsManagment.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationList<IUser>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery]UserFilter filter)
         {
-            if (filter.CurrentPage > 0)
-            {
-                return Ok(await Service.GetMany(filter));
-            }
-            else
-            {
-                return Ok(await Service.GetAll());
-            }
-            
+            return Ok(await Service.GetMany(filter));   
         }
+
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IUser))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Post(CreateUserViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -58,6 +55,8 @@ namespace UserGroupsManagment.Controllers
             return BadRequest();
         }
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IUser))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Edit(EditUserViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -68,6 +67,8 @@ namespace UserGroupsManagment.Controllers
             return BadRequest();
         }
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IUser))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await Service.DeleteOne(id));
