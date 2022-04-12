@@ -76,7 +76,7 @@ namespace UserGroupsManagment.Controllers
             return BadRequest();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
