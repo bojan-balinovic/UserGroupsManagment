@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace UserGroupsManagment.ViewModels
 {
-    public class UserViewModel
+    public class EditUserViewModel
     {
         public int Id { get; set; }
-        public DateTime DateModified { get; set; }
-        public DateTime DateCreated { get; set; }
         [EmailAddress]
         public string Email { get; set; }
         [MinLength(8)]

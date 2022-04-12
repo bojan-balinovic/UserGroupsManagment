@@ -43,7 +43,7 @@ namespace UserGroupsManagment.Test.Service
             var group = new Group() { Name = "Grupa 1" };
             User user1 = new User() { Name = "test1", Password = "12345678", Email = "test@test.com" };
             User user2 = new User() { Name = "test2", Password = "12345678", Email = "test2@test.com" };
-            group.Users = new List<User>();
+            group.Users = new List<IUser>();
             group.Users.Add(user1);
             group.Users.Add(user2);
             IGroup newGroup = await Service.AddOne(group);
@@ -61,7 +61,7 @@ namespace UserGroupsManagment.Test.Service
             var group = new Group() { Name = "Grupa 1" };
             User user1 = new User() { Name = "test1", Password = "12345678", Email = "test@test.com" };
             User user2 = new User() { Name = "test2", Password = "12345678", Email = "test2@test.com" };
-            group.Users = new List<User>();
+            group.Users = new List<IUser>();
             group.Users.Add(user1);
             group.Users.Add(user2);
             IGroup newGroup = await Service.AddOne(group);

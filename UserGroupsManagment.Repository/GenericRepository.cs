@@ -78,7 +78,7 @@ namespace UserGroupsManagment.Repository
             var models = Mapper.Map<IEnumerable<IModel>>(entities);
             currentPage = filter.CurrentPage != null ? (int)filter.CurrentPage : currentPage;
             int? pageSize = filter.PageSize != null ? filter.PageSize : null;
-            var paginationList = new PaginationList<IModel>(models.ToList(), currentPage, pageSize);
+            var paginationList = new PaginationList<IModel>(models.ToList(), currentPage, pageSize, Mapper);
             return await Task.FromResult(paginationList);
         }
 
@@ -137,6 +137,7 @@ namespace UserGroupsManagment.Repository
                 var entityEntry = DbSet.Update(entity);
                 entityEntry.State = EntityState.Modified;
                 await Context.SaveChangesAsync();
+                model = Mapper.Map<Entity, Model>(entity);
                 return model;
             }
             return default;

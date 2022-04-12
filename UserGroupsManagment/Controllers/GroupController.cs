@@ -26,54 +26,65 @@ namespace UserGroupsManagment.Controllers
             Mapper = mapper;
         }
 
-        [HttpGet("id")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetOne(int Id)
+        public async Task<IActionResult> GetOne(int id)
         {
-            return Ok(await Service.GetOneByFilter(new GroupFilter { Id = Id }));
+            var model = await Service.GetOneByFilter(new GroupFilter { Id = id });
+            var viewModel = Mapper.Map<IGroup, GroupViewModel>(model);
+            return Ok(viewModel);
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationList<IGroup>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationList<GroupViewModel>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] GroupFilter filter)
         {
-            return Ok(await Service.GetMany(filter));
+            var paginationList = await Service.GetMany(filter);
+            var viewModels = paginationList.GetMapped<GroupViewModel>();
+            return Ok(viewModels);
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Post(CreateGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 IGroup model = Mapper.Map<CreateGroupViewModel, IGroup>(viewModel);
-                return Ok(await Service.AddOne(model));
+                model=await Service.AddOne(model);
+                var groupViewModel = Mapper.Map<IGroup, GroupViewModel>(model);
+                return Ok(groupViewModel);
             }
             return BadRequest();
         }
 
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Edit(GroupViewModel viewModel)
+        public async Task<IActionResult> Edit(EditGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var model = Mapper.Map<GroupViewModel, IGroup>(viewModel);
-                return Ok(await Service.UpdateOne(model));
+                var model = Mapper.Map<EditGroupViewModel, IGroup>(viewModel);
+                model = await Service.UpdateOne(model);
+                var groupViewModel = Mapper.Map<IGroup, GroupViewModel>(model);
+                return Ok(groupViewModel);
             }
             return BadRequest();
         }
 
         [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await Service.DeleteOne(id));
+            var model = await Service.DeleteOne(id);
+            if (model == null) return NotFound();
+            var viewModel = Mapper.Map<IGroup, GroupViewModel>(model);
+            return Ok(viewModel);
         }
     }
 }

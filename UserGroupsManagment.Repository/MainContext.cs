@@ -17,7 +17,7 @@ namespace UserGroupsManagment.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<GroupEntity>().HasMany(e => e.Users);
+            modelBuilder.Entity<GroupEntity>().HasMany(e => e.Users).WithOne(e=>e.Group);
         }
     }
 }
