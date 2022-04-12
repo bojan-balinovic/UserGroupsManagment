@@ -16,6 +16,6 @@ namespace UserGroupsManagment.ViewModels
         [MinLength(8)]
         public string Password { get; set; }
         public string Name { get; set; }
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
     }
 }

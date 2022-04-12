@@ -41,8 +41,8 @@ namespace UserGroupsManagment.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery]UserFilter filter)
         {
-            var models = await Service.GetMany(filter);
-            var viewModels = Mapper.Map<PaginationList<IUser>, PaginationList<UserViewModel>>(models);
+            var paginationList= await Service.GetMany(filter);
+            var viewModels = paginationList.GetMapped<UserViewModel>();
             return Ok(viewModels);   
         }
 
@@ -60,6 +60,7 @@ namespace UserGroupsManagment.Controllers
             }
             return BadRequest();
         }
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditUserViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,13 +75,14 @@ namespace UserGroupsManagment.Controllers
             }
             return BadRequest();
         }
+
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             var model = await Service.DeleteOne(id);
-            if (model == null) return null;
+            if (model == null) return NotFound();
             var viewModel = Mapper.Map<IUser, UserViewModel>(model);
             return Ok(viewModel);
         }
