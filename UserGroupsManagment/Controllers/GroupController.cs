@@ -39,15 +39,7 @@ namespace UserGroupsManagment.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] GroupFilter filter)
         {
-            if (filter.CurrentPage > 0)
-            {
-                return Ok(await Service.GetMany(filter));
-            }
-            else
-            {
-                return Ok(await Service.GetAll());
-            }
-
+            return Ok(await Service.GetMany(filter));
         }
 
         [HttpPost]
