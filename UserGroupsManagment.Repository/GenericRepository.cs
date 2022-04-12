@@ -45,8 +45,8 @@ namespace UserGroupsManagment.Repository
             if (model != null)
             {
                 var entity = Mapper.Map<Entity>(model);
-                entity.DateCreated = DateTime.Now;
-                entity.DateModified = DateTime.Now;
+                entity.DateCreated = DateTime.UtcNow;
+                entity.DateModified = DateTime.UtcNow;
                 var entityEntry=await DbSet.AddAsync(entity);
                 await Context.SaveChangesAsync();
                 //entityEntry.State = EntityState.Detached;
