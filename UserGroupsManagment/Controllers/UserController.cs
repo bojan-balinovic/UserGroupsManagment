@@ -57,11 +57,11 @@ namespace UserGroupsManagment.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IUser))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Edit(EditUserViewModel viewModel)
+        public async Task<IActionResult> Edit(UserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var model = Mapper.Map<EditUserViewModel, IUser>(viewModel);
+                var model = Mapper.Map<UserViewModel, IUser>(viewModel);
                 return Ok(await Service.UpdateOne(model));
             }
             return BadRequest();
