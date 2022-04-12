@@ -25,6 +25,10 @@ namespace UserGroupsManagment.Repository
             {
                 entities = entities.Where(e => e.Name == filter.Name);
             }
+            if (filter.GroupId != null)
+            {
+                entities = entities.Where(e => e.GroupId == filter.GroupId);
+            }
             return entities;
         }
     }
