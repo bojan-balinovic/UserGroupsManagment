@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,17 @@ namespace UserGroupsManagment.Controllers
             Mapper = mapper;
         }
 
+        [HttpGet("id")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOne(int Id)
+        {
+            return Ok(await Service.GetOneByFilter(new GroupFilter { Id = Id }));
+        }
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginationList<IGroup>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] GroupFilter filter)
         {
             if (filter.CurrentPage > 0)
@@ -38,7 +49,10 @@ namespace UserGroupsManagment.Controllers
             }
 
         }
+
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Post(CreateGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -48,7 +62,10 @@ namespace UserGroupsManagment.Controllers
             }
             return BadRequest();
         }
+
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Edit(EditGroupViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -58,7 +75,10 @@ namespace UserGroupsManagment.Controllers
             }
             return BadRequest();
         }
+
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IGroup))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await Service.DeleteOne(id));
